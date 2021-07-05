@@ -47,9 +47,9 @@ def generate_dataset():
 
 def generate_model(model, input_size = (3,32,32)):
     cuda = torch.cuda.is_available()
-    torch.manual_seed(SEED)
+    torch.manual_seed(1)
     if cuda:
-        torch.cuda.manual_seed(SEED)
+        torch.cuda.manual_seed(1)
     device = torch.device("cuda" if cuda else "cpu")
     model_generated = model.to(device)
     print(summary(model_generated, input_size=input_size))

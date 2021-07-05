@@ -21,9 +21,11 @@ train_acc = []
 test_losses = []
 test_acc = []
 
-optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
-scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.5, steps_per_epoch=len(trainloader), epochs=20)
 
+def create_optim(model, epochs, trainloader):
+    optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.5, steps_per_epoch=len(trainloader), epochs=epochs)
+    return optimizer, scheduler
 
 def train(model, device, train_loader, optimizer, epoch):
   model.train()

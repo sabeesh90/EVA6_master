@@ -27,8 +27,9 @@ def create_optim(model, epochs, trainloader):
     scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.5, steps_per_epoch=len(trainloader), epochs=epochs)
     return optimizer, scheduler
 
-def train(model, device, trainloader, optimizer, epoch):
+def train(model, device, trainloader, optimizer, epochs):
   model.train()
+  print(len(trainloader))
   pbar = tqdm(trainloader)
   correct = 0
   processed = 0
@@ -71,6 +72,6 @@ def test(model, device, testloader):
 def train_model(epochs, model, trainloader, testloader, optimizer,scheduler,device='cuda'):
     for epoch in range(epochs):
         print("EPOCH:", epoch)
-        train(model, device, trainloader, optimizer, epoch)
+        train(model, device, trainloader, optimizer, epochs)
         scheduler.step()
-        test(model, device, testloader)
+        test(model, device, testloader)             

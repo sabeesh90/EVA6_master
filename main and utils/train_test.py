@@ -27,7 +27,7 @@ def create_optim(model, epochs, trainloader):
     scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.5, steps_per_epoch=len(trainloader), epochs=epochs)
     return optimizer, scheduler
 
-def train(model, device, train_loader, optimizer, epoch):
+def train(model, device, trainloader, optimizer, epoch):
   model.train()
   pbar = tqdm(trainloader)
   correct = 0

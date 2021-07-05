@@ -65,7 +65,7 @@ summary(model, input_size=(3, 32, 32))
 
 # defining the hyperparameters, loss functions and optimizers
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model2.parameters(), lr=0.01, momentum=0.9)
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
 scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.5, steps_per_epoch=len(trainloader), epochs=EPOCHS)
 
 

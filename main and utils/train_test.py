@@ -68,7 +68,7 @@ def test(model, device, testloader):
     test_acc.append(100. * correct / len(testloader.dataset))
 
 
-def train_model(epochs, model, device = device, trainloader = trainloader, testloader =testloader):
+def train_model(epochs, model, device, trainloader, testloader):
     for epoch in range(epochs):
         print("EPOCH:", epoch)
         train(model, device, trainloader, optimizer, epoch)

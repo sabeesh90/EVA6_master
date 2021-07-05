@@ -44,20 +44,13 @@ def generate_dataset():
 
     return trainloader, testloader
 
-    
-def load_cuda():
-# Loading cuda
-    SEED = 1
+
+def generate_model(model, input_size = (3,32,32)):
     cuda = torch.cuda.is_available()
-    print("CUDA Available?", cuda)
     torch.manual_seed(SEED)
     if cuda:
         torch.cuda.manual_seed(SEED)
     device = torch.device("cuda" if cuda else "cpu")
-    print(device)
-    return device
-
-def generate_model(model, input_size = (3,32,32)):
     model_generated = model.to(device)
     print(summary(model_generated, input_size=input_size))
     return model_generated

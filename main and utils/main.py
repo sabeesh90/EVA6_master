@@ -60,7 +60,7 @@ print(device)
 print('Building model')
 net = ResNet18()
 model = net.to(device)
-summary(model, input_size=(1, 28, 28))
+summary(model, input_size=(3, 32, 32))
 
 
 # defining the hyperparameters, loss functions and optimizers

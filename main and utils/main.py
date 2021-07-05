@@ -1,4 +1,4 @@
-'''Train CIFAR10 with PyTorch.'''
+''' Train CIFAR10 with PyTorch.'''
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -68,7 +68,7 @@ print('==> Building model..')
 # net = ShuffleNetV2(1)
 # net = EfficientNetB0()
 # net = RegNetX_200MF()
-net = SimpleDLA()
+net = ResNet18()
 net = net.to(device)
 if device == 'cuda':
     net = torch.nn.DataParallel(net)

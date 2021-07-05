@@ -122,7 +122,8 @@ def format_time(seconds):
     if f == '':
         f = '0ms'
     return f
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
+# © 2021 GitHub, Inc.
+# Terms
+# Privacy
+# Security
+# S

@@ -42,7 +42,7 @@ def init_params(net):
                 init.constant(m.bias, 0)
 
 
-_, term_width = os.popen('stty size', 'r').read().split()
+a, term_width = os.popen('stty size', 'r').read().split()
 term_width = int(term_width)
 
 TOTAL_BAR_LENGTH = 65.
@@ -122,3 +122,7 @@ def format_time(seconds):
     if f == '':
         f = '0ms'
     return f
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security

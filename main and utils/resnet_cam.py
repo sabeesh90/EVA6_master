@@ -9,12 +9,10 @@ class ResNet_Mod(nn.Module):
         # loading the model
         self.res = model   
         # accessing the last convolutional layer     
-        self.last_layer = self.res.layer4[1]        
+        self.last_layer = nn.Sequential(*list(self.res.children())[:-1])     
         # accessing the last classifier layer
-        self.classifier = nn.Sequential(
-            nn.Conv2d(in_channels=512, out_channels=10, kernel_size=(1, 1), padding=0, bias=False),
-        ) 
-        
+        self.classifier = nn.Sequential(*list(model.children())[-1:])
+
         # placeholder for the gradients
         self.gradients = None
     
@@ -27,12 +25,12 @@ class ResNet_Mod(nn.Module):
         
         # register the hook
         h = x.register_hook(self.activations_hook)
-
-        # 
         x = x.view((1, -1))
         x = self.classifier(x)
         return x
-    
+
+
+    return x    
     # method for the gradient extraction
     def get_activations_gradient(self):
         return self.gradients

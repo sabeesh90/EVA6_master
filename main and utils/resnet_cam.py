@@ -11,7 +11,7 @@ class ResNet_Mod(nn.Module):
         # accessing the last convolutional layer     
         self.last_layer = nn.Sequential(*list(self.res.children())[:-1])     
         # accessing the last classifier layer
-        self.classifier = nn.Sequential(*list(model.children())[-1:])
+        self.classifier = nn.Sequential(*list(self.res.children())[-1:])
 
         # placeholder for the gradients
         self.gradients = None
@@ -29,8 +29,6 @@ class ResNet_Mod(nn.Module):
         x = self.classifier(x)
         return x
 
-
-    return x    
     # method for the gradient extraction
     def get_activations_gradient(self):
         return self.gradients

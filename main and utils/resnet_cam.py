@@ -25,7 +25,7 @@ class ResNet_Mod(nn.Module):
         
         # register the hook
         h = x.register_hook(self.activations_hook)
-        x = x.view((1, -1))
+        # x = x.view((1, -1))
         x = self.classifier(x)
         return x
 

@@ -30,15 +30,22 @@ def generate_dataset():
         ToTensor(),
     ])
 
-    trainset = torchvision.datasets.CIFAR10(
-        root='./data', train=True, download=True, transform=transform_train)
-    trainloader = torch.utils.data.DataLoader(
-        trainset, batch_size=128, shuffle=True, num_workers=2)
+    # trainset = torchvision.datasets.CIFAR10(
+    #     root='./data', train=True, download=True, transform=transform_train)
+    # trainloader = torch.utils.data.DataLoader(
+    #     trainset, batch_size=128, shuffle=True, num_workers=2)
 
-    testset = torchvision.datasets.CIFAR10(
-        root='./data', train=False, download=True, transform=transform_test)
-    testloader = torch.utils.data.DataLoader(
-        testset, batch_size=1, shuffle=False, num_workers=2)
+    # testset = torchvision.datasets.CIFAR10(
+    #     root='./data', train=False, download=True, transform=transform_test)
+    # testloader = torch.utils.data.DataLoader(
+    #     testset, batch_size=1, shuffle=False, num_workers=2)
+
+
+    train = Cifar10SearchDataset( train=True, download=True, transform=transform_train)
+    test = Cifar10SearchDataset( train=False, download=True, transform=transform_test)
+    dataloader_args = dict(shuffle=True, batch_size=batch_size, num_workers=4, pin_memory=True)
+    trainloader = torch.utils.data.DataLoader(train, **dataloader_args)
+    testloader = torch.utils.data.DataLoader(test, **dataloader_args)
 
     classes = ('plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck')

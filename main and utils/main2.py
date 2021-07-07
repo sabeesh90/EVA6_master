@@ -13,6 +13,7 @@ from torchsummary import summary
 from torch.optim.lr_scheduler import OneCycleLR
 from tqdm import tqdm
 import albumentations as A
+from albumentations.pytorch.transforms import ToTensor
 
 
 def generate_dataset():
@@ -28,7 +29,7 @@ def generate_dataset():
         A.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ToTensor(),
     ])
-    
+
     trainset = torchvision.datasets.CIFAR10(
         root='./data', train=True, download=True, transform=transform_train)
     trainloader = torch.utils.data.DataLoader(

@@ -4,11 +4,8 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
-
 import torchvision
 import torchvision.transforms as transforms
-import os
-import argparse
 from models import *
 from utils import progress_bar
 from tqdm import tqdm
@@ -37,11 +34,12 @@ def generate_dataset():
     testset = torchvision.datasets.CIFAR10(
         root='./data', train=False, download=True, transform=transform_test)
     testloader = torch.utils.data.DataLoader(
-        testset, batch_size=100, shuffle=False, num_workers=2)
+        testset, batch_size=1, shuffle=False, num_workers=2)
 
     classes = ('plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck')
 
+    
     return trainloader, testloader
 
 
@@ -55,11 +53,3 @@ def generate_model(model, input_size = (3,32,32)):
     print(summary(model_generated, input_size=input_size))
     return model_generated
 
-
-# defining the hyperparameters, loss functions and optimizers
-
-
-# for epoch in range(start_epoch, start_epoch+40):
-#     train(epoch)
-#     test(epoch)
-#     scheduler.step()

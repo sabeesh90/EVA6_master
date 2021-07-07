@@ -58,8 +58,8 @@ def generate_dataset():
     test = Cifar10SearchDataset( train=False, download=True, transform=transform_test)
     dataloader_args_train = dict(shuffle=True, batch_size=128, num_workers=4, pin_memory=True)
     dataloader_args_test =dict(shuffle=True, batch_size=1, num_workers=4, pin_memory=True)
-    trainloader = torch.utils.data.DataLoader(train, **dataloader_args_test)
-    testloader = torch.utils.data.DataLoader(test, **dataloader_args_train)
+    trainloader = torch.utils.data.DataLoader(train, **dataloader_args_train)
+    testloader = torch.utils.data.DataLoader(test, **dataloader_args_test)
 
     classes = ('plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck')

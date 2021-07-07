@@ -9,9 +9,11 @@ class ResNet_Mod(nn.Module):
         # loading the model
         self.res = model   
         # accessing the last convolutional layer     
-        self.last_layer = nn.Sequential(*list(self.res.children())[:-1])     
+        self.first_part = nn.Sequential(*list(self.res.children())[:5])  #nn.Sequential(*list(loaded_model.children())[0:5])   #8x8 output
         # accessing the last classifier layer
-        self.classifier = nn.Sequential(*list(self.res.children())[-1:])
+        self.second_part = nn.Sequential(*list(self.res.children())[5:-1]) # 8x8 output
+        self.max_pool = nn.MaxPool2d(kernel_size=4, stride=1, padding=0, dilation=1)
+        self.classifier =  nn.Sequential(*list(self.res.children())[-1:])
 
         # placeholder for the gradients
         self.gradients = None
@@ -21,10 +23,12 @@ class ResNet_Mod(nn.Module):
         self.gradients = grad
         
     def forward(self, x):
-        x = self.last_layer(x)
+        x = self.first_part(x)
         
         # register the hook
         h = x.register_hook(self.activations_hook)
+        x = self.second_part(x)
+        x = self.max_pool(x)
         x = x.view((1, -1))
         x = self.classifier(x)
         return x
@@ -35,4 +39,4 @@ class ResNet_Mod(nn.Module):
     
     # method for the activation exctraction
     def get_activations(self, x):
-        return self.features_conv(x)
+        return self.first_part(x)

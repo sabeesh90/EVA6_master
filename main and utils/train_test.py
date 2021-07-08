@@ -29,7 +29,7 @@ def create_optim(model, trainloader):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, min_lr=0.01, patience = 5)
     return optimizer, scheduler
 
-def train(model,trainloader, optimizer, epochs, device = 'cuda'):
+def train(model,trainloader, optimizer, device = 'cuda'):
 
     model.train()
     print(len(trainloader))
@@ -53,7 +53,7 @@ def train(model,trainloader, optimizer, epochs, device = 'cuda'):
     mean_loss = sum(train_losses)/len(train_losses)
     scheduler.step(mean_loss)
 
-def test(model, device, testloader):    
+def test(model, testloader, device = 'cuda'):    
     model.eval()
     test_loss = 0
     correct = 0
@@ -73,10 +73,4 @@ def test(model, device, testloader):
         100. * correct / len(testloader.dataset)))
     
     test_acc.append(100. * correct / len(testloader.dataset))
-
-def run_model(model, trainloader, optimizer, epochs = 40, device= 'cuda'):    
-    for epoch in range(epochs):
-        print("EPOCH:", epoch)
-        train(model,trainloader, optimizer, epochs, device = 'cuda')
-        test(model, device, testloader)
 

@@ -20,6 +20,7 @@ train_losses = []
 train_acc = []
 test_losses = []
 test_acc = []
+train_loss_total = []
 
 step_loss = 0
 
@@ -49,7 +50,8 @@ def train(model,trainloader, optimizer, device, scheduler):
         pbar.set_description(desc= f'Loss={loss.item()} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
         train_acc.append(100*correct/processed)
     
-    mean_loss = sum(train_losses)/len(train_losses)
+    train_loss_total.append(sum(train_losses)) # Added by Sabeesh - to plot epoch wise loss
+    mean_loss = sum(train_losses)/len(train_losses) # added by Manu
     scheduler.step(mean_loss)
 
 def test(model, testloader,device):    

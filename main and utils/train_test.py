@@ -1,4 +1,34 @@
 
+
+import torch.optim as optim
+''' Train CIFAR10 with PyTorch.'''
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import torch.backends.cudnn as cudnn
+import torchvision
+import torchvision.transforms as transforms
+from models import *
+from utils import progress_bar
+from tqdm import tqdm
+from torchsummary import summary
+from torch.optim.lr_scheduler import OneCycleLR
+from tqdm import tqdm
+
+
+train_losses = []
+train_acc = []
+test_losses = []
+test_acc = []
+
+step_loss = 0
+
+def create_optim(model, trainloader):
+    optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, min_lr=0.01, patience = 5)
+    return optimizer, scheduler
+
 def train(model,trainloader, optimizer, epochs, device = 'cuda'):
 
     model.train()

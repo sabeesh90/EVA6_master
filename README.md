@@ -1,7 +1,8 @@
 # EVA
 
 # EVA S8 notes:
-
+## Building the architecture of Resnet - 18
+The architecture of resnet has been modified to incorporate a backward hook at the level of the output of the fourht convolutional layer. The rest of the network is the same. Max pooling layer has been applied before the classification layer to accomodate for the dimensions of the image that needs to be passed. 
 
 
 ## Momentum:

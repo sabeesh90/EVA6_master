@@ -48,7 +48,7 @@ def train(model,trainloader, optimizer, device, scheduler):
         correct += pred.eq(target.view_as(pred)).sum().item()
         processed += len(data)
         pbar.set_description(desc= f'Loss={loss.item()} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
-        train_acc.append(100*correct/processed)
+            train_acc.append(100*correct/processed)
     
     mean_loss = sum(train_losses)/len(train_losses)
     scheduler.step(mean_loss)

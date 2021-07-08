@@ -10,7 +10,6 @@ import torch.backends.cudnn as cudnn
 import torchvision
 import torchvision.transforms as transforms
 from models import *
-from utils import progress_bar
 from tqdm import tqdm
 from torchsummary import summary
 from torch.optim.lr_scheduler import OneCycleLR

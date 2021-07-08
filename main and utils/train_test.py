@@ -29,7 +29,7 @@ def create_optim(model, trainloader):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, min_lr=0.01, patience = 5)
     return optimizer, scheduler
 
-def train(model,trainloader, optimizer, device):
+def train(model,trainloader, optimizer, device, scheduler):
 
     model.train()
     print(len(trainloader))

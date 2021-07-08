@@ -30,7 +30,7 @@ def generate_gradcam(predicted_class,pred,model, img, true_class_label, predicte
     plt.imshow(superimposed_img)
     plt.title(a)
     
-def get_true_pred(testloader,activated_mod,count_images):
+def get_true_pred(testloader,activated_mod,count_images,class_dictionary):
     passed = 0
     fail = 0
     count = 0

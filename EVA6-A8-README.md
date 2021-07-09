@@ -1,12 +1,30 @@
 # EVA
 
 # EVA S8 notes:
-## Building the architecture of Resnet - 18
-The architecture of resnet has been modified to incorporate a backward hook at the level of the output of the fourht convolutional layer. The rest of the network is the same. Max pooling layer has been applied before the classification layer to accomodate for the dimensions of the image that needs to be passed. 
 
+## Building the architecture of Resnet - 18
+1) A basic  resnet architectue is built using the concepts of Resnet 18 as available in the documentation. The same is shown below.<br>
+2) This architecture of resnet has been modified by passing it through a custsom built class to break down the network to extract the convolution at the level of 8x8 channel output, which is at the 3th block. This is preferred so that the heat map superimposition may be significantly big enough to understand the learning of the model. <br>
+![resnet breakdown](https://user-images.githubusercontent.com/48343095/125080935-0b7ef600-e0e3-11eb-9147-f81eacf1262a.png) <br>
+3) A backward hook is incorporated at the fourth block layer. The rest of the network is the same. Max pooling layer has been applied before the classification layer to accomodate for the dimensions of the image. <br>
+![gradient](https://user-images.githubusercontent.com/48343095/125083112-9d87fe00-e0e5-11eb-803b-e60ab52e1cf9.png) <br>
+4) The following are the modifications of the network. <br>
+- Layer normalization at every layer of the architecture <br>
+![layernormalization](https://user-images.githubusercontent.com/48343095/125080212-2d2bad80-e0e2-11eb-8243-3116f580f322.png) <br>
+- Incoproration of Reduce Learning rate on Plateau which is implemented at the end of every epoch. <br>
+-![reducelr1](https://user-images.githubusercontent.com/48343095/125080250-39b00600-e0e2-11eb-9ce0-967c8dd30d46.PNG) ![reducelr2](https://user-images.githubusercontent.com/48343095/125080267-3f0d5080-e0e2-11eb-94fa-697f80e476c1.PNG) <br>
+- Incorporation of augmemntation techinques such as rotate(+/-5), Cutout (16x16), and random crop of the images. <br>
+![augmentations](https://user-images.githubusercontent.com/48343095/125080300-4af91280-e0e2-11eb-9384-84a526d3b09f.PNG) <br>
+
+5) Training is done for 40 epochs. <br>
+
+6) The misclasified images are plotted using a custom class built and the heat map of the grad cam is plotted againt the images. The heat map shows which part of the image the model has identified to miclassify the image. Since the images are of low definition the clarity of the grad cam may not be well established and explained. However the same may be utilized to classify higher quality images. <br>
+
+7) The amount of gradient in the heat cam to be applied or super imposed on the original image may be varied by using a hyperpara
+
+7) Some concepts to understand here are as follows:-
 
 ## Momentum:
-
 Momentum is a concept in analog physics. Generally speaking, the momentum of an object refers to the tendency of the object to keep moving in the direction of its motion, which is the product of the mass and speed of the object.
 
 **Here’s a popular story about momentum**: gradient descent is a man walking down a hill. He follows the steepest path downwards; his progress is slow, but steady. Momentum is a heavy ball rolling down the same hill. The added inertia acts both as a smoother and an accelerator, dampening oscillations and causing us to barrel through narrow valleys, small humps and local minima.
@@ -15,13 +33,9 @@ Momentum is a concept in analog physics. Generally speaking, the momentum of an 
 
 One nice model is the convex quadratic. This model is rich enough to reproduce momentum’s local dynamics in real problems, and yet simple enough to be understood in closed form. This balance gives us powerful traction for understanding this algorithm.
 
-
-
 We begin with **gradient descent**. The algorithm has many virtues, but speed is not one of them. It is simple — when optimizing a smooth function ***f***, we make a small step in the gradient w (*k*+1) = *w*( *k*) − *α* * *∇* *f* (*w* (*k*) )
 
 For a step-size *small enough*, gradient descent makes a monotonic improvement at every iteration. It always converges, albeit to a local minimum. And under a few weak curvature conditions it can even get there at an exponential rate.
-
-
 
 But the exponential decrease, though appealing in theory, can often be infuriatingly small. Things often begin quite well — with an impressive, almost immediate decrease in the loss. But as the iterations progress, things start to slow down. You start to get a nagging feeling you’re not making as much progress as you should be (so true 😑). What has gone wrong?
 

@@ -29,8 +29,8 @@ def create_optim(model, trainloader):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, min_lr=0.01, patience = 5)
     return optimizer, scheduler
 
-def train(model,trainloader, optimizer, device, scheduler):
-
+def train(model, trainloader, optimizer, device, scheduler):
+    running_loss = 0.0
     model.train()
     print(len(trainloader))
     pbar = tqdm(trainloader)
@@ -41,18 +41,18 @@ def train(model,trainloader, optimizer, device, scheduler):
         optimizer.zero_grad()
         y_pred = model(data)
         loss = F.cross_entropy(y_pred, target)
-        train_losses.append(loss)
+        running_loss += loss
         loss.backward()
         optimizer.step()
         pred = y_pred.argmax(dim=1, keepdim=True)  # get the index of the max log-probability
         correct += pred.eq(target.view_as(pred)).sum().item()
         processed += len(data)
-        pbar.set_description(desc= f'Loss={loss.item()} Batch_id={batch_idx} Accuracy={100*correct/processed:0.2f}')
-        train_acc.append(100*correct/processed)
-    
-    train_loss_total.append(sum(train_losses)) # Added by Sabeesh - to plot epoch wise loss
-    mean_loss = sum(train_losses)/len(train_losses) # added by Manu
-    scheduler.step(mean_loss)
+        pbar.set_description(desc=f'Loss={loss.item()} Batch_id={batch_idx} Accuracy={100 * correct / processed:0.2f}')
+        train_acc.append(100 * correct / processed)
+
+    mean_loss = running_loss / len(trainloader)
+    train_losses.append(mean_loss)
+    scheduler.step(running_loss)
 
 def test(model, testloader,device):    
     model.eval()

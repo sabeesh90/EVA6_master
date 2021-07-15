@@ -18,8 +18,8 @@ class BasicBlock(nn.Module):
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes, self.expansion*planes,
                           kernel_size=1, stride=stride, bias=False),
-                nn.BatchNorm2d(self.expansion*planes)
-                nn.ReLu()
+                nn.BatchNorm2d(self.expansion*planes),
+                nn.ReLU(),
                 nn.Conv2d(self.expansion*planes, self.expansion*planes,
                           kernel_size=1, stride=stride, bias=False),
                 nn.BatchNorm2d(self.expansion*planes)

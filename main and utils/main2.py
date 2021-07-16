@@ -32,7 +32,7 @@ def generate_dataset():
     transform_train = A.Compose([
         A.Rotate(+5,-5),
         A.RandomCrop(32,32,p=0.1),
-        A.CoarseDropout(max_holes = 1, max_height=16, max_width=16, min_holes = 1, min_height=4, min_width=4, fill_value=(0.4914, 0.4822, 0.4465)), 
+        A.CoarseDropout(max_holes = 1, max_height=8, max_width=8, min_holes = 1, min_height=4, min_width=4, fill_value=(0.4914, 0.4822, 0.4465)), 
         A.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ToTensor(),
     ])
@@ -42,21 +42,12 @@ def generate_dataset():
         ToTensor(),
     ])
 
-    # trainset = torchvision.datasets.CIFAR10(
-    #     root='./data', train=True, download=True, transform=transform_train)
-    # trainloader = torch.utils.data.DataLoader(
-    #     trainset, batch_size=128, shuffle=True, num_workers=2)
-
-    # testset = torchvision.datasets.CIFAR10(
-    #     root='./data', train=False, download=True, transform=transform_test)
-    # testloader = torch.utils.data.DataLoader(
-    #     testset, batch_size=1, shuffle=False, num_workers=2)
 
 
     train = Cifar10SearchDataset( train=True, download=True, transform=transform_train)
     test = Cifar10SearchDataset( train=False, download=True, transform=transform_test)
-    dataloader_args_train = dict(shuffle=True, batch_size=128, num_workers=4, pin_memory=True)
-    dataloader_args_test =dict(shuffle=True, batch_size=1, num_workers=4, pin_memory=True)
+    dataloader_args_train = dict(shuffle=True, batch_size=512, num_workers=4, pin_memory=True)
+    dataloader_args_test =dict(shuffle=True, batch_size=128, num_workers=4, pin_memory=True)
     trainloader = torch.utils.data.DataLoader(train, **dataloader_args_train)
     testloader = torch.utils.data.DataLoader(test, **dataloader_args_test)
 

@@ -12,8 +12,6 @@ class BasicBlock(nn.Module):
         self.bn1 = nn.BatchNorm2d(planes)
         self.shortcut = nn.Sequential()
         self.count1= count
-
-        # if stride != 1 or in_planes != self.expansion*planes:
         if self.count1 == 'a':
             self.shortcut = nn.Sequential(
                 nn.Conv2d(in_planes, self.expansion*planes,
@@ -33,7 +31,7 @@ class BasicBlock(nn.Module):
             out = out+y
             out = F.relu(out)
             return out
-        out = F.max_pool2d(out,kernel_size=(2,2))                 
+        out = F.max_pool2d(out,kernel_size=(4,4))                 
         return out
 
 class ResNet(nn.Module):

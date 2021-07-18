@@ -21,6 +21,7 @@ test_losses = []
 test_acc = []
 mean_training_loss = []
 step_loss = 0
+criterion = nn.CrossEntropyLoss()
 
 def create_optim(model, trainloader, epochs=40):
     optimizer = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
@@ -37,7 +38,8 @@ def train(model, device, train_loader, optimizer, epoch):
     data, target = data.to(device), target.to(device)
     optimizer.zero_grad()
     y_pred = model(data)
-    loss = F.nll_loss(y_pred, target)
+#     loss = F.nll_loss(y_pred, target)
+    loss = criterion(y_pred, target)
     train_losses.append(loss)
     loss.backward()
     optimizer.step()

@@ -1,5 +1,7 @@
 # Assingment 9 - EVA 6 Modified Resnet Architecture <br>
 
+### Bharath Kumar Bolla, Sabeesh and Dinesh ###
+
 The following are the modifications done in the resnet architecture:<br>
 There are three convolutional blocks. First and Third have a residual block. While the second does not have one. There are a total of 7,105,138 neurons in the architecture<br>
 1) incorporation of a convolutional layer before the residual block.<br>

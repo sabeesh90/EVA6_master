@@ -16,7 +16,7 @@ from albumentations.pytorch.transforms import ToTensor
 
 import torchvision
 class Cifar10SearchDataset(torchvision.datasets.CIFAR10):
-    def __init__(self, root="~/data/cifar10/sabeesh", train=True, download=True, transform=None):
+    def __init__(self, root="~/data/cifar10/sabeesh3", train=True, download=True, transform=None):
         super().__init__(root=root, train=train, download=download, transform=transform)
 
     def __getitem__(self, index):
@@ -30,21 +30,18 @@ class Cifar10SearchDataset(torchvision.datasets.CIFAR10):
     
 def generate_dataset(train_batch, test_batch):
     transform_train = A.Compose([
-        A.Rotate(+5,-5),
-        A.RandomCrop(32,32,p=0.1),
-        A.CoarseDropout(max_holes = 1, max_height=8, max_width=8, min_holes = 1, min_height=4, min_width=4, fill_value=(0.4914, 0.4822, 0.4465)), 
-        A.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-        ToTensor(),
-    ])
+                                 A.Cutout(num_holes = 1, p = 0.5, fill_value =(0.4914, 0.4822, 0.4465)),
+                                 A.HorizontalFlip(p=0.5),
+                                 A.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
+                                 ToTensor()
+                                 ])
 
     transform_test = A.Compose([
         A.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
         ToTensor(),
     ])
 
-
-
-    train = Cifar10SearchDataset( train=True, download=True, transform=transform_train)
+    train = Cifar10SearchDataset( train=True, download=True, transform=transform_train,)
     test = Cifar10SearchDataset( train=False, download=True, transform=transform_test)
     dataloader_args_train = dict(shuffle=True, batch_size=train_batch, num_workers=4, pin_memory=True)
     dataloader_args_test =dict(shuffle=True, batch_size=test_batch, num_workers=4, pin_memory=True)
@@ -68,3 +65,4 @@ def generate_model(model, input_size = (3,32,32)):
     print(summary(model_generated, input_size=input_size))
     return model_generated
 
+                
